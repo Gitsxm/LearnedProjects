@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=LgyTuilFZDI3K8os0t6PDHpFhjfSgl7g"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+    <script type="text/javascript" src="http://lbsyun.baidu.com/custom/stylelist.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>热力图功能示例</title>
+    <style type="text/css">
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            float: left;
+        }
+
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            font-family: "微软雅黑";
+        }
+
+        #container {
+            height: 90%;
+            width: 100%;
+        }
+
+        #r-result {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container"></div>
+<div id="r-result">
+    <input type="button" onclick="openHeatmap();" value="显示热力图"/><input type="button" onclick="closeHeatmap();"
+                                                                        value="关闭热力图"/>
+</div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    //校验浏览器
+    function checkhHtml5() {
+        if (typeof(Worker) === "undefined") {
+            if (navigator.userAgent.indexOf("MSIE 9.0") <= 0) {
+                alert("定制个性地图示例：IE9以下不兼容，推荐使用百度浏览器、chrome、firefox、safari、IE10");
+            }
+
+        }
+    }
+
+    checkhHtml5();
+    var map = new BMap.Map("container"); // 创建地图实例
+
+    var point = new BMap.Point(119.314393, 26.081963);
+    //设置风格高端黑
+    var mapStyle = {
+        features: ["road", "building", "water", "land",], //隐藏地图上的poi
+        style: "dark", //设置地图风格为高端黑
+    }
+    map.setMapStyle(mapStyle);
+    // 初始化地图，设置中心点坐标和地图级别
+    map.centerAndZoom(point, 15);
+    // 允许滚轮缩放
+    map.enableScrollWheelZoom();
+
+    //添加行政区划
+    function getBoundary() {
+        var bdary = new BMap.Boundary();
+        bdary.get("福建省福州市", function (rs) { //获取行政区域
+            //map.clearOverlays();        //清除地图覆盖物
+            var count = rs.boundaries.length; //行政区域的点有多少个
+            if (count === 0) {
+                alert('未能获取当前输入行政区域');
+                return;
+            }
+            var pointArray = [];
+            for (var i = 0; i < count; i++) {
+                var ply = new BMap.Polygon(rs.boundaries[i], {
+                    strokeWeight: 0,
+                    strokeColor: "#ff0000",
+                    fillOpacity: "0.05"
+                }); //建立多边形覆盖物
+                map.addOverlay(ply); //添加覆盖物
+                pointArray = pointArray.concat(ply.getPath());
+            }
+            map.setViewport(pointArray); //调整视野
+            //addlabel();
+        });
+    }
+
+    setTimeout(function () {
+        getBoundary();
+    }, 2000);
+
+    //添加显示label
+    /* function addlabel() {
+        var pointArray = [
+          new BMap.Point(121.716076,23.703799),
+          new BMap.Point(112.121885,14.570616),
+          new BMap.Point(123.776573,25.695422)];
+        var optsArray = [{},{},{}];
+        var labelArray = [];
+        var contentArray = [
+          "台湾是中国的！",
+          "南海是中国的！",
+          "钓鱼岛是中国的！"];
+        for(var i = 0;i < pointArray.length; i++) {
+          optsArray[i].position = pointArray[i];
+          labelArray[i] = new BMap.Label(contentArray[i],optsArray[i]);
+          labelArray[i].setStyle({
+            color : "red",
+            fontSize : "12px",
+                 height : "20px",
+                 lineHeight : "20px",
+                 fontFamily:"微软雅黑"
+             });
+          map.addOverlay(labelArray[i]);
+        }
+    }*/
+    if (!isSupportCanvas()) {
+        alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+    }
+    //详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+    //参数说明如下:
+    /* visible 热力图是否显示,默认为true
+     * opacity 热力的透明度,1-100
+     * radius 势力图的每个点的半径大小
+     * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
+     *	{
+            .2:'rgb(0, 255, 255)',
+            .5:'rgb(0, 110, 255)',
+            .8:'rgb(100, 0, 255)'
+        }
+        其中 key 表示插值的位置, 0~1.
+            value 为颜色值.
+     */
+    heatmapOverlay = new BMapLib.HeatmapOverlay({
+        "radius": 20
+    });
+
+    map.addOverlay(heatmapOverlay);
+    //取数据
+    $.get("/show", function (result) {
+        heatmapOverlay.setDataSet({
+            data: result,
+            max: 100
+        });
+    });
+
+    //是否显示热力图
+    function openHeatmap() {
+        heatmapOverlay.show();
+    }
+
+    function closeHeatmap() {
+        heatmapOverlay.hide();
+    }
+
+    closeHeatmap();
+
+    function setGradient() {
+        /*格式如下所示:
+        {
+              0:'rgb(102, 255, 0)',
+              .5:'rgb(255, 170, 0)',
+              1:'rgb(255, 0, 0)'
+        }*/
+        var gradient = {};
+        var colors = document.querySelectorAll("input[type='color']");
+        colors = [].slice.call(colors, 0);
+        colors.forEach(function (ele) {
+            gradient[ele.getAttribute("data-key")] = ele.value;
+        });
+        heatmapOverlay.setOptions({
+            "gradient": gradient
+        });
+    }
+
+    //判断浏览区是否支持canvas
+    function isSupportCanvas() {
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    }
+</script>
