@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,12 @@ public class App
         //JsonArr 转 List
         List<Dog> dogList = JSONArray.parseArray(jarr.toJSONString(),Dog.class);
         System.out.println("JsonArr 转 List："+ dogList.get(0));
+        //list 转 jsonarray
+        List<Dog> list = new ArrayList<>();
+        list.add(dog1);
+        list.add(dog2);
+        JSONArray dogArray = JSONArray.parseArray(JSON.toJSONString(list));
+        System.out.println("list 转 JsonArray：" + dogArray);
         //字符串类型数组 转 josnArray
         String jarrStr = "[{\"name\":\"huahua\",\"age\":2},{\"name\":\"kaka\",\"age\":3}]";
         JSONArray s2jarr = JSONArray.parseArray(jarrStr);
