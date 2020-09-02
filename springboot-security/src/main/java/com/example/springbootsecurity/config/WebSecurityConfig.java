@@ -1,10 +1,13 @@
 package com.example.springbootsecurity.config;
 
 import com.example.springbootsecurity.service.CustomUserService;
+import org.hibernate.annotations.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
+
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
+
+    @Resource(name = "customLogoutSuccessHandler")
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     private DataSource dataSource;
@@ -87,19 +98,48 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //拦截处理
         http.authorizeRequests()
-                //登录处理
-                .and().formLogin().loginPage("/login").permitAll().successForwardUrl("/home")
-                .and().authorizeRequests()
                 //允许不需要验证路径设置
-                .antMatchers("/images/**", "/checkcode", "/scripts/**", "/styles/**").permitAll()
+                .antMatchers("/img/**", "/checkcode", "/js/**", "/css/**").permitAll()
                 .antMatchers(settings.getPermitAll().split(",")).permitAll()
                 //除上面两行所有请求都需要验证
                 .anyRequest().authenticated()
+                //登录处理
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/doLogin")
+                .permitAll()
+                //登录成功跳转
+//                .successForwardUrl("/home")
+                //登录成功处理
+                .successHandler(loginSuccessHandler)
+                //登录失败处理
+                .failureHandler(loginFailureHandler)
+                .and().authorizeRequests()
+
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
-                .and().logout().logoutSuccessUrl(settings.getLogoutSuccessUrl())
-                .and().exceptionHandling().accessDeniedPage(settings.getDeniedPage())
+                .and().logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                //注销成功跳转
+//                .logoutSuccessUrl(settings.getLogoutSuccessUrl())
+                .and()
+                //鉴权异常处理
+                .exceptionHandling()
+                //未登录返回json信息 异常自定义处理 不再跳转
+                .authenticationEntryPoint((req, resp, authException) -> {
+                    resp.setContentType("application/json;charset=utf-8");
+                    PrintWriter out = resp.getWriter();
+                    out.write("尚未登录，请先登录");
+                    out.flush();
+                    out.close();
+                })
+                //未登录访问跳转
+                //.accessDeniedPage(settings.getDeniedPage())
                 .and().rememberMe().tokenValiditySeconds(1800).tokenRepository(tokenRepository())
-                .and().csrf().requireCsrfProtectionMatcher(csrfSecurityRequestMatcher());
+                .and().csrf()
+                //用 api 访问时这个要禁用
+                .disable();
+                //.requireCsrfProtectionMatcher(csrfSecurityRequestMatcher());
     }
 
     /**
@@ -137,7 +177,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 静态资源过滤
+     * 静态资源过滤-这里的路径可以不走 spring-security 忽略路径的推荐做法
      *
      * @param web
      * @throws Exception
@@ -145,5 +185,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/js/**", "/css/**", "/img");
+    }
+
+    /**
+     * 角色继承
+     *
+     * @return
+     */
+//    @Bean
+    protected RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy = "admin > manager /n manager > user";
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
     }
 }

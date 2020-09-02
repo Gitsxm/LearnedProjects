@@ -1,6 +1,7 @@
 package com.example.springbootsecurity.config;
 
 import com.example.springbootsecurity.system.authorities.SysUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * 登录成功处理器(暂时没用)
@@ -28,6 +30,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         //简单日志存储
         logger.info("登录用户:" + userDeatils.getUsername() + ";login:" + httpServletRequest.getContextPath());
         logger.info("IP:" + httpServletRequest.getRemoteAddr());
-        super.onAuthenticationSuccess(httpServletRequest, httpServletResponse, authentication);
+//        super.onAuthenticationSuccess(httpServletRequest, httpServletResponse, authentication);
+        //返回 json 不做跳转
+        httpServletResponse.setContentType("application/json;charset=utf-8");
+        PrintWriter out = httpServletResponse.getWriter();
+        out.write(new ObjectMapper().writeValueAsString(userDeatils));
+        out.flush();
+        out.close();
     }
 }
