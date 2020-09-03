@@ -115,7 +115,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //登录失败处理
                 .failureHandler(loginFailureHandler)
                 .and().authorizeRequests()
-
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and().logout()
                 .logoutUrl("/logout")
