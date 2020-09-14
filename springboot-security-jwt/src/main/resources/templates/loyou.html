@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8" content="text/html">
+    <mete name="_csrf" th:content="${_csrf.token}"/>
+    <mete name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{js/public.css}"/>
+</head>
+<body>
+
+</body>
+</html>
