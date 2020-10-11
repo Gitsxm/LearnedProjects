@@ -15,6 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,24 +30,26 @@ public class FileController {
 
     /**
      * 上传单个文件
+     *
      * @param file
      * @return
      */
     @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file){
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         //存储
         String fileName = fileService.storeFile(file);
         //生成下载路径
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
-                .path(fileName)
                 .toUriString();
+        fileDownloadUri += fileName;
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
     }
 
     /**
      * 上传多个文件
+     *
      * @param files
      * @return
      */
@@ -58,12 +62,13 @@ public class FileController {
 
     /**
      * 下载
+     *
      * @param fileName
      * @param request
      * @return
      */
     @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws UnsupportedEncodingException {
         // 加载文件
         Resource resource = fileService.loadFileAsResource(fileName);
         // 确定上下文类型
@@ -74,12 +79,12 @@ public class FileController {
             logger.info("Could not determine file type.");
         }
         // 返回默认类型如果无法确定
-        if(contentType == null) {
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + URLEncoder.encode(resource.getFilename(), "utf-8") + "\"")
                 .body(resource);
     }
 }
