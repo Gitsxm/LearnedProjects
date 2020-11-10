@@ -19,5 +19,5 @@ public interface StuinfoMapper {
 
     int updateByPrimaryKey(Stuinfo record);
 
-    List<Stuinfo> seletcAll();
+    List<Stuinfo> selectAll();
 }

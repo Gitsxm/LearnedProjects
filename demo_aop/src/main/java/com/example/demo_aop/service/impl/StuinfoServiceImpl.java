@@ -26,7 +26,7 @@ public class StuinfoServiceImpl implements StuinfoService {
      * @return
      */
     public List<Stuinfo> queryAll() {
-        return stuinfoMapper.seletcAll();
+        return stuinfoMapper.selectAll();
     }
 
     /**
