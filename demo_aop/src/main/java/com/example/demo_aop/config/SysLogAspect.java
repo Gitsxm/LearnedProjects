@@ -43,11 +43,12 @@ public class SysLogAspect {
     @Around("sysLogPointCut()")
     public Object arround(ProceedingJoinPoint joinPoint) throws Throwable {
         long beginTime = System.currentTimeMillis();
+        Object point = joinPoint.proceed();
         //执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
         //保存日志
         saveSysLog(joinPoint, time);
-        return joinPoint.proceed();
+        return point;
     }
 
     private void saveSysLog(JoinPoint joinPoint,long time) {

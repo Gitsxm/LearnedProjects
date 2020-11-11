@@ -1,5 +1,8 @@
 package com.example.demo_aop.domain;
 
+import lombok.ToString;
+
+@ToString
 public class Stuinfo {
     private Integer id;
 

@@ -1,11 +1,9 @@
 package com.example.demo_aop.config;
 
 
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,6 +11,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName WebLogAspect
@@ -52,8 +52,6 @@ public class WebLogAspect {
         logger.info("args={}", joinPoint.getArgs());
     }
 
-
-
     /**
      * 返回后结果日志
      *
@@ -62,5 +60,32 @@ public class WebLogAspect {
     @AfterReturning(returning = "object", pointcut = "StuinfoController()")
     public void doAfterReturning(Object object) {
         logger.info("Object={}", object);
+    }
+
+    /**
+     * 后置通知
+     *
+     * @param joinPoint
+     */
+    @After("StuinfoController()")
+    public void doAfter(JoinPoint joinPoint) {
+        String className = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
+        List<Object> args = Arrays.asList(joinPoint.getArgs());
+        logger.info("调用后连接点方法为：" + className +"."+ methodName + "(),参数为：" + args);
+    }
+
+    /**
+     * 异常通知
+     *
+     * @param point
+     * @param ex
+     */
+    @AfterThrowing(pointcut = "StuinfoController()", throwing = "ex")
+    public void afterReturning(JoinPoint point, Exception ex) {
+        String className = point.getTarget().getClass().getName();
+        String methodName = point.getSignature().getName();
+        List<Object> args = Arrays.asList(point.getArgs());
+        logger.info("连接点方法为：" + className +"."+ methodName + "(),参数为：" + args + ",异常为：" + ex);
     }
 }

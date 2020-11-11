@@ -1,7 +1,10 @@
 package com.example.demo_aop.domain;
 
+import lombok.ToString;
+
 import java.util.Date;
 
+@ToString
 public class SysLogEntity {
     private Integer id;
 
