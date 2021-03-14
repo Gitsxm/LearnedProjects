@@ -11,18 +11,17 @@ import java.util.Arrays;
  */
 public class Test {
     public static void main(String[] args) {
-        FileMock mock = new FileMock(100,1);
+        FileMock mock = new FileMock(100, 1);
         Buffer buffer = new Buffer(10);
-        Producer producer = new Producer(mock,buffer);
-        Thread prodThread = new Thread(producer,"Producer");
+        Producer producer = new Producer(mock, buffer);
+        Thread prodThread = new Thread(producer, "Producer");
         Consumer[] consumers = new Consumer[3];
         Thread[] csmThreads = new Thread[3];
-        for (int i=0;i<3;i++){
+        for (int i = 0; i < 3; i++) {
             consumers[i] = new Consumer(buffer);
-            csmThreads[i] = new Thread(consumers[i],"Consumer"+i);
+            csmThreads[i] = new Thread(consumers[i], "Consumer" + i);
         }
         prodThread.start();
-        Arrays.stream(csmThreads).forEach(e->e.start());
-
+        Arrays.stream(csmThreads).forEach(e -> e.start());
     }
 }

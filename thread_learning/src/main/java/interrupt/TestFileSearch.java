@@ -1,7 +1,7 @@
 package interrupt;
 
 /**
- * TODO
+ * TODO 控制中断状态
  *
  * @author MGG
  * @version 1.0

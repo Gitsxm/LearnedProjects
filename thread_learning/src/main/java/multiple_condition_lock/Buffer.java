@@ -39,34 +39,34 @@ public class Buffer {
             lines.signalAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             lock.unlock();
         }
 
     }
 
-    public String get(){
+    public String get() {
         String line = null;
         lock.lock();
-        try{
-            while((buffer.size()==0) && (hasPendingLines())){
+        try {
+            while ((buffer.size() == 0) && (hasPendingLines())) {
                 lines.await();
             }
-            if (hasPendingLines()){
+            if (hasPendingLines()) {
                 line = buffer.poll();
-                System.out.println(Thread.currentThread().getName()+" Line readed: "+buffer.size());
+                System.out.println(Thread.currentThread().getName() + " Line readed: " + buffer.size());
                 space.signalAll();
             }
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             lock.unlock();
         }
         return line;
     }
 
-    public boolean hasPendingLines(){
-        return this.pendingLines || buffer.size()>0;
+    public boolean hasPendingLines() {
+        return this.pendingLines || buffer.size() > 0;
     }
 
     public void setPendingLines(boolean pendingLines) {

@@ -3,7 +3,7 @@ package interrupt;
 import java.io.File;
 
 /**
- * TODO
+ * TODO 线程中断控制
  *
  * @author MGG
  * @version 1.0

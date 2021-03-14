@@ -1,7 +1,7 @@
 package interrupt;
 
 /**
- * TODO
+ * TODO 线程运行五秒后中断
  *
  * @author MGG
  * @version 1.0
