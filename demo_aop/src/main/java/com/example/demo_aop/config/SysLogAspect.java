@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.example.demo_aop.annotation.SysLog;
 import com.example.demo_aop.domain.SysLogEntity;
 import com.example.demo_aop.service.SysLogService;
-import com.example.demo_aop.service.impl.SysLogServiceImpl;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -19,7 +17,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -51,7 +48,7 @@ public class SysLogAspect {
         return point;
     }
 
-    private void saveSysLog(JoinPoint joinPoint,long time) {
+    private void saveSysLog(JoinPoint joinPoint, long time) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         SysLogEntity logEntity = new SysLogEntity();
@@ -69,7 +66,7 @@ public class SysLogAspect {
         //get args
         Object[] args = joinPoint.getArgs();
         try {
-            if (args.length>0){
+            if (args.length > 0) {
                 String params = JSON.toJSONString(args[0]);
                 logEntity.setArgs(params);
             }
