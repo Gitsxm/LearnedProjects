@@ -1,7 +1,7 @@
 package singleInstance.lazyman;
 
 /**
- * TODO 性能更好的单例模式-饿汉模式
+ * TODO 性能更好的单例模式-懒汉模式
  *
  * @author MGG
  * @version 1.0
