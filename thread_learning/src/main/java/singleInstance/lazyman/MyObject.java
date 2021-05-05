@@ -1,7 +1,7 @@
 package singleInstance.lazyman;
 
 /**
- * TODO 性能更好的单例模式-懒汉模式
+ * TODO 性能更好的双检锁单例模式-懒汉模式
  *
  * @author MGG
  * @version 1.0
@@ -9,6 +9,10 @@ package singleInstance.lazyman;
  */
 public class MyObject {
     private volatile static MyObject myObject;
+
+    private MyObject(){
+
+    }
 
     /**
      * DCL双检测机制提升性能

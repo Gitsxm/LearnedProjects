@@ -20,7 +20,8 @@ public class PersonServiceImpl {
     public Person saveOne(Person person) {
         Person p = repository.save(person);
         System.out.println("保存 person.id = " + person.getId() + " 的数据到缓存 people 中，key = " + person.getId());
-        return p; // 必须有返回保存的 person 对象
+        // 必须有返回保存的 person 对象
+        return p;
     }
 
     @Cacheable(value = "people", key = "#person.id") // 缓存 key = person id 属性的值的数据到 people 中

@@ -50,13 +50,14 @@ public class ExcelUtil<T extends NameToField> {
 
     /**
      * 传入表头 map
+     *
      * @param filePath
      * @param inputStream
      * @param t
      * @param fieldMap
      * @throws Exception
      */
-    public ExcelUtil(String filePath, InputStream inputStream, Class<T> t,Map<String, String> fieldMap) throws Exception {
+    public ExcelUtil(String filePath, InputStream inputStream, Class<T> t, Map<String, String> fieldMap) throws Exception {
         this.filePath = filePath;
         this.fieldMap = fieldMap;
         workbook = initWorkBook(filePath, inputStream);
@@ -65,6 +66,15 @@ public class ExcelUtil<T extends NameToField> {
         init();
     }
 
+    /**
+     * 初始化 WorkBook
+     *
+     * @param filePath
+     * @param inputStream
+     * @return
+     * @throws IOException
+     * @throws InvalidFormatException
+     */
     public Workbook initWorkBook(String filePath, InputStream inputStream) throws IOException, InvalidFormatException {
         Workbook workbook = null;
         if (filePath.endsWith(EXCEL_2003)) {
@@ -79,6 +89,11 @@ public class ExcelUtil<T extends NameToField> {
     }
 
 
+    /**
+     * 初始化数据
+     *
+     * @throws Exception
+     */
     public void init() throws Exception {
         sheets = new ArrayList<Sheet>();
         rows = new ArrayList<Row>();
@@ -199,13 +214,13 @@ public class ExcelUtil<T extends NameToField> {
         // 添加excel title
         HSSFCell cell = null;
         for (int i = 0; i < strArray.length; i++) {
-            cell = row.createCell( i);
+            cell = row.createCell(i);
             cell.setCellValue(strArray[i]);
             cell.setCellStyle(style);
         }
         // 第五步，写入实体数据 实际应用中这些数据从数据库得到,list中字符串的顺序必须和数组strArray中的顺序一致
-        for(int rowNo=0;rowNo<datas.size();rowNo++){
-            row = sheet.createRow( rowNo + 1);
+        for (int rowNo = 0; rowNo < datas.size(); rowNo++) {
+            row = sheet.createRow(rowNo + 1);
             List<String> list = datas.get(rowNo);
             // 第四步，创建单元格，并设置值
             for (int j = 0; j < strArray.length; j++) {
@@ -214,7 +229,7 @@ public class ExcelUtil<T extends NameToField> {
             // 第六步，将文件存到指定位置
             try {
                 File file = new File("E:/Members.xls");
-                if (!file.exists()){
+                if (!file.exists()) {
                     file.createNewFile();
                 }
                 FileOutputStream fout = new FileOutputStream(file);

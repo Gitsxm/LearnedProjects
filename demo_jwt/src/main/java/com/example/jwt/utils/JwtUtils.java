@@ -18,7 +18,8 @@ import java.util.Date;
  */
 public class JwtUtils {
     private static final String ISSUER = "user";//token 类型
-    private static final Integer EXPIRATION_TIME = 5 * 60 * 1000;// 过期时间
+    private static final Integer EXPIRATION_TIME = 5 * 60 * 1000;// 过期时间、
+    private static final String privateSecretCode = "mgg";//私钥
 
     /**
      * 生成 Token
@@ -29,7 +30,7 @@ public class JwtUtils {
     public static String createToken(User user) {
         if (user == null)
             throw new RuntimeException("用户信息不能为空！");
-        Algorithm algorithm = Algorithm.HMAC256(user.getPassWord());
+        Algorithm algorithm = Algorithm.HMAC256(user.getPassWord());//可以替换成私钥，这边加密，
         JWTCreator.Builder builder = JWT.create()
                 .withAudience(user.getUserId())
                 .withIssuer(ISSUER)
@@ -44,7 +45,7 @@ public class JwtUtils {
      * @param user
      */
     public static void verifyToken(String token, User user) {
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassWord())).build();
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassWord())).build();//这边解密，配合其他安全框架做无状态服务验证
         try {
             jwtVerifier.verify(token);
         } catch (JWTVerificationException e) {

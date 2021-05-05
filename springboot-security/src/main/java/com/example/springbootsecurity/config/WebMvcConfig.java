@@ -1,6 +1,7 @@
 package com.example.springbootsecurity.config;
 
 import org.apache.catalina.session.PersistentManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -13,14 +14,20 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
+    @Value("${file.path}")
+    private String filePath;
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.addViewController("/login").setViewName("/login");
 //    }
 
+    /**
+     * 可以直接读取磁盘文件
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/file/**").addResourceLocations("file:"+filePath);
     }
 
     /**

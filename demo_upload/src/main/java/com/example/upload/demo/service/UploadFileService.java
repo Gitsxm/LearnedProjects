@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 @Service
 public class UploadFileService {
@@ -48,9 +49,12 @@ public class UploadFileService {
                 throw new FileException("Sorry! Filename contains invalid path sequence " + fileName);
             }
             // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            String fileNameWithoutSuffix = fileName.substring(0,fileName.lastIndexOf("."));//获取没有后缀的文件名
+            String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);//获取文件的后缀名
+            String reName = UUID.randomUUID().toString()+"."+suffix;
+            Path targetLocation = this.fileStorageLocation.resolve(reName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return fileName;
+            return reName;
         } catch (IOException ex) {
             throw new FileException("Could not store file " + fileName + ". Please try again!", ex);
         }
@@ -74,4 +78,5 @@ public class UploadFileService {
             throw new FileException("File not found " + fileName, ex);
         }
     }
+
 }

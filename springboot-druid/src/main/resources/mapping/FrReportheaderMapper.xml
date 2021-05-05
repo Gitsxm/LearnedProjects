@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.druid.mapper.FrReportheaderMapper">
+  <resultMap id="BaseResultMap" type="com.example.druid.domain.FrReportheader">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="UIID" jdbcType="VARCHAR" property="uiid" />
+    <result column="TASKID" jdbcType="VARCHAR" property="taskid" />
+    <result column="REPORTTYPE" jdbcType="VARCHAR" property="reporttype" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CITYNAME" jdbcType="VARCHAR" property="cityname" />
+    <result column="DEPARTMENTNAME" jdbcType="VARCHAR" property="departmentname" />
+    <result column="REGIONNAME" jdbcType="VARCHAR" property="regionname" />
+    <result column="REGIONCODE" jdbcType="VARCHAR" property="regioncode" />
+    <result column="REGIONOCEAN" jdbcType="VARCHAR" property="regionocean" />
+    <result column="REPORTUNIT" jdbcType="VARCHAR" property="reportunit" />
+    <result column="INSTITUTIONNAME" jdbcType="VARCHAR" property="institutionname" />
+    <result column="INSTITUTIONCODE" jdbcType="VARCHAR" property="institutioncode" />
+    <result column="DOMAINNAME" jdbcType="VARCHAR" property="domainname" />
+    <result column="DOMAINCODE" jdbcType="VARCHAR" property="domaincode" />
+    <result column="REPORTYEAR" jdbcType="VARCHAR" property="reportyear" />
+    <result column="REPORTQUARTER" jdbcType="VARCHAR" property="reportquarter" />
+    <result column="REPORTNO" jdbcType="VARCHAR" property="reportno" />
+    <result column="CREATEUNIT" jdbcType="VARCHAR" property="createunit" />
+    <result column="APPROVEUNIT" jdbcType="VARCHAR" property="approveunit" />
+    <result column="APPROVENO" jdbcType="VARCHAR" property="approveno" />
+    <result column="EXPIREDATE" jdbcType="VARCHAR" property="expiredate" />
+    <result column="MEASUREUNIT" jdbcType="VARCHAR" property="measureunit" />
+    <result column="REPORTUNITADMIN" jdbcType="VARCHAR" property="reportunitadmin" />
+    <result column="REPORTSTATADMIN" jdbcType="VARCHAR" property="reportstatadmin" />
+    <result column="REPORTFILLADMIN" jdbcType="VARCHAR" property="reportfilladmin" />
+    <result column="REPORTADMINTEL" jdbcType="VARCHAR" property="reportadmintel" />
+    <result column="REPORTDATE" jdbcType="VARCHAR" property="reportdate" />
+    <result column="REPORTUSERID" jdbcType="VARCHAR" property="reportuserid" />
+    <result column="REPORTUSERNAME" jdbcType="VARCHAR" property="reportusername" />
+    <result column="REPORTUSEROFFICE" jdbcType="VARCHAR" property="reportuseroffice" />
+    <result column="HTML" jdbcType="OTHER" property="html" />
+    <result column="CREATEDON" jdbcType="TIMESTAMP" property="createdon" />
+    <result column="MODIFIEDON" jdbcType="TIMESTAMP" property="modifiedon" />
+    <result column="TASKPERIOD" jdbcType="VARCHAR" property="taskperiod" />
+    <result column="AUDITSTATUS" jdbcType="VARCHAR" property="auditstatus" />
+    <result column="AUDITON" jdbcType="TIMESTAMP" property="auditon" />
+    <result column="AUDITUSERID" jdbcType="VARCHAR" property="audituserid" />
+    <result column="AUDITUSERNAME" jdbcType="VARCHAR" property="auditusername" />
+    <result column="PASSEDSTATUS" jdbcType="VARCHAR" property="passedstatus" />
+    <result column="AUDITCOMMENT" jdbcType="OTHER" property="auditcomment" />
+    <result column="REPORTCODE" jdbcType="VARCHAR" property="reportcode" />
+    <result column="REMARK" jdbcType="OTHER" property="remark" />
+    <result column="REPORTON" jdbcType="TIMESTAMP" property="reporton" />
+    <result column="APPROVESTATUS" jdbcType="VARCHAR" property="approvestatus" />
+    <result column="FILLUNITTYPE" jdbcType="VARCHAR" property="fillunittype" />
+    <result column="ISMANDATORYREPORT" jdbcType="DECIMAL" property="ismandatoryreport" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="TESTREQUIRE" jdbcType="DECIMAL" property="testrequire" />
+    <result column="TESTCHECK" jdbcType="DECIMAL" property="testcheck" />
+    <result column="TESTRANGE" jdbcType="DECIMAL" property="testrange" />
+    <result column="REPORTREMARK" jdbcType="OTHER" property="reportremark" />
+    <result column="REPORTOFFICE" jdbcType="VARCHAR" property="reportoffice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, UIID, TASKID, REPORTTYPE, NAME, CITYNAME, DEPARTMENTNAME, REGIONNAME, REGIONCODE, 
+    REGIONOCEAN, REPORTUNIT, INSTITUTIONNAME, INSTITUTIONCODE, DOMAINNAME, DOMAINCODE, 
+    REPORTYEAR, REPORTQUARTER, REPORTNO, CREATEUNIT, APPROVEUNIT, APPROVENO, EXPIREDATE, 
+    MEASUREUNIT, REPORTUNITADMIN, REPORTSTATADMIN, REPORTFILLADMIN, REPORTADMINTEL, REPORTDATE, 
+    REPORTUSERID, REPORTUSERNAME, REPORTUSEROFFICE, HTML, CREATEDON, MODIFIEDON, TASKPERIOD, 
+    AUDITSTATUS, AUDITON, AUDITUSERID, AUDITUSERNAME, PASSEDSTATUS, AUDITCOMMENT, REPORTCODE, 
+    REMARK, REPORTON, APPROVESTATUS, FILLUNITTYPE, ISMANDATORYREPORT, STATUS, TESTREQUIRE, 
+    TESTCHECK, TESTRANGE, REPORTREMARK, REPORTOFFICE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FR_REPORTHEADER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from FR_REPORTHEADER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.druid.domain.FrReportheader">
+    insert into FR_REPORTHEADER (ID, UIID, TASKID, 
+      REPORTTYPE, NAME, CITYNAME, 
+      DEPARTMENTNAME, REGIONNAME, REGIONCODE, 
+      REGIONOCEAN, REPORTUNIT, INSTITUTIONNAME, 
+      INSTITUTIONCODE, DOMAINNAME, DOMAINCODE, 
+      REPORTYEAR, REPORTQUARTER, REPORTNO, 
+      CREATEUNIT, APPROVEUNIT, APPROVENO, 
+      EXPIREDATE, MEASUREUNIT, REPORTUNITADMIN, 
+      REPORTSTATADMIN, REPORTFILLADMIN, REPORTADMINTEL, 
+      REPORTDATE, REPORTUSERID, REPORTUSERNAME, 
+      REPORTUSEROFFICE, HTML, CREATEDON, 
+      MODIFIEDON, TASKPERIOD, AUDITSTATUS, 
+      AUDITON, AUDITUSERID, AUDITUSERNAME, 
+      PASSEDSTATUS, AUDITCOMMENT, REPORTCODE, 
+      REMARK, REPORTON, APPROVESTATUS, 
+      FILLUNITTYPE, ISMANDATORYREPORT, STATUS, 
+      TESTREQUIRE, TESTCHECK, TESTRANGE, 
+      REPORTREMARK, REPORTOFFICE)
+    values (#{id,jdbcType=VARCHAR}, #{uiid,jdbcType=VARCHAR}, #{taskid,jdbcType=VARCHAR}, 
+      #{reporttype,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
+      #{departmentname,jdbcType=VARCHAR}, #{regionname,jdbcType=VARCHAR}, #{regioncode,jdbcType=VARCHAR}, 
+      #{regionocean,jdbcType=VARCHAR}, #{reportunit,jdbcType=VARCHAR}, #{institutionname,jdbcType=VARCHAR}, 
+      #{institutioncode,jdbcType=VARCHAR}, #{domainname,jdbcType=VARCHAR}, #{domaincode,jdbcType=VARCHAR}, 
+      #{reportyear,jdbcType=VARCHAR}, #{reportquarter,jdbcType=VARCHAR}, #{reportno,jdbcType=VARCHAR}, 
+      #{createunit,jdbcType=VARCHAR}, #{approveunit,jdbcType=VARCHAR}, #{approveno,jdbcType=VARCHAR}, 
+      #{expiredate,jdbcType=VARCHAR}, #{measureunit,jdbcType=VARCHAR}, #{reportunitadmin,jdbcType=VARCHAR}, 
+      #{reportstatadmin,jdbcType=VARCHAR}, #{reportfilladmin,jdbcType=VARCHAR}, #{reportadmintel,jdbcType=VARCHAR}, 
+      #{reportdate,jdbcType=VARCHAR}, #{reportuserid,jdbcType=VARCHAR}, #{reportusername,jdbcType=VARCHAR}, 
+      #{reportuseroffice,jdbcType=VARCHAR}, #{html,jdbcType=OTHER}, #{createdon,jdbcType=TIMESTAMP}, 
+      #{modifiedon,jdbcType=TIMESTAMP}, #{taskperiod,jdbcType=VARCHAR}, #{auditstatus,jdbcType=VARCHAR}, 
+      #{auditon,jdbcType=TIMESTAMP}, #{audituserid,jdbcType=VARCHAR}, #{auditusername,jdbcType=VARCHAR}, 
+      #{passedstatus,jdbcType=VARCHAR}, #{auditcomment,jdbcType=OTHER}, #{reportcode,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=OTHER}, #{reporton,jdbcType=TIMESTAMP}, #{approvestatus,jdbcType=VARCHAR}, 
+      #{fillunittype,jdbcType=VARCHAR}, #{ismandatoryreport,jdbcType=DECIMAL}, #{status,jdbcType=DECIMAL}, 
+      #{testrequire,jdbcType=DECIMAL}, #{testcheck,jdbcType=DECIMAL}, #{testrange,jdbcType=DECIMAL}, 
+      #{reportremark,jdbcType=OTHER}, #{reportoffice,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.druid.domain.FrReportheader">
+    insert into FR_REPORTHEADER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="uiid != null">
+        UIID,
+      </if>
+      <if test="taskid != null">
+        TASKID,
+      </if>
+      <if test="reporttype != null">
+        REPORTTYPE,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="cityname != null">
+        CITYNAME,
+      </if>
+      <if test="departmentname != null">
+        DEPARTMENTNAME,
+      </if>
+      <if test="regionname != null">
+        REGIONNAME,
+      </if>
+      <if test="regioncode != null">
+        REGIONCODE,
+      </if>
+      <if test="regionocean != null">
+        REGIONOCEAN,
+      </if>
+      <if test="reportunit != null">
+        REPORTUNIT,
+      </if>
+      <if test="institutionname != null">
+        INSTITUTIONNAME,
+      </if>
+      <if test="institutioncode != null">
+        INSTITUTIONCODE,
+      </if>
+      <if test="domainname != null">
+        DOMAINNAME,
+      </if>
+      <if test="domaincode != null">
+        DOMAINCODE,
+      </if>
+      <if test="reportyear != null">
+        REPORTYEAR,
+      </if>
+      <if test="reportquarter != null">
+        REPORTQUARTER,
+      </if>
+      <if test="reportno != null">
+        REPORTNO,
+      </if>
+      <if test="createunit != null">
+        CREATEUNIT,
+      </if>
+      <if test="approveunit != null">
+        APPROVEUNIT,
+      </if>
+      <if test="approveno != null">
+        APPROVENO,
+      </if>
+      <if test="expiredate != null">
+        EXPIREDATE,
+      </if>
+      <if test="measureunit != null">
+        MEASUREUNIT,
+      </if>
+      <if test="reportunitadmin != null">
+        REPORTUNITADMIN,
+      </if>
+      <if test="reportstatadmin != null">
+        REPORTSTATADMIN,
+      </if>
+      <if test="reportfilladmin != null">
+        REPORTFILLADMIN,
+      </if>
+      <if test="reportadmintel != null">
+        REPORTADMINTEL,
+      </if>
+      <if test="reportdate != null">
+        REPORTDATE,
+      </if>
+      <if test="reportuserid != null">
+        REPORTUSERID,
+      </if>
+      <if test="reportusername != null">
+        REPORTUSERNAME,
+      </if>
+      <if test="reportuseroffice != null">
+        REPORTUSEROFFICE,
+      </if>
+      <if test="html != null">
+        HTML,
+      </if>
+      <if test="createdon != null">
+        CREATEDON,
+      </if>
+      <if test="modifiedon != null">
+        MODIFIEDON,
+      </if>
+      <if test="taskperiod != null">
+        TASKPERIOD,
+      </if>
+      <if test="auditstatus != null">
+        AUDITSTATUS,
+      </if>
+      <if test="auditon != null">
+        AUDITON,
+      </if>
+      <if test="audituserid != null">
+        AUDITUSERID,
+      </if>
+      <if test="auditusername != null">
+        AUDITUSERNAME,
+      </if>
+      <if test="passedstatus != null">
+        PASSEDSTATUS,
+      </if>
+      <if test="auditcomment != null">
+        AUDITCOMMENT,
+      </if>
+      <if test="reportcode != null">
+        REPORTCODE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="reporton != null">
+        REPORTON,
+      </if>
+      <if test="approvestatus != null">
+        APPROVESTATUS,
+      </if>
+      <if test="fillunittype != null">
+        FILLUNITTYPE,
+      </if>
+      <if test="ismandatoryreport != null">
+        ISMANDATORYREPORT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="testrequire != null">
+        TESTREQUIRE,
+      </if>
+      <if test="testcheck != null">
+        TESTCHECK,
+      </if>
+      <if test="testrange != null">
+        TESTRANGE,
+      </if>
+      <if test="reportremark != null">
+        REPORTREMARK,
+      </if>
+      <if test="reportoffice != null">
+        REPORTOFFICE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uiid != null">
+        #{uiid,jdbcType=VARCHAR},
+      </if>
+      <if test="taskid != null">
+        #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="reporttype != null">
+        #{reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null">
+        #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="regionname != null">
+        #{regionname,jdbcType=VARCHAR},
+      </if>
+      <if test="regioncode != null">
+        #{regioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionocean != null">
+        #{regionocean,jdbcType=VARCHAR},
+      </if>
+      <if test="reportunit != null">
+        #{reportunit,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionname != null">
+        #{institutionname,jdbcType=VARCHAR},
+      </if>
+      <if test="institutioncode != null">
+        #{institutioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="domainname != null">
+        #{domainname,jdbcType=VARCHAR},
+      </if>
+      <if test="domaincode != null">
+        #{domaincode,jdbcType=VARCHAR},
+      </if>
+      <if test="reportyear != null">
+        #{reportyear,jdbcType=VARCHAR},
+      </if>
+      <if test="reportquarter != null">
+        #{reportquarter,jdbcType=VARCHAR},
+      </if>
+      <if test="reportno != null">
+        #{reportno,jdbcType=VARCHAR},
+      </if>
+      <if test="createunit != null">
+        #{createunit,jdbcType=VARCHAR},
+      </if>
+      <if test="approveunit != null">
+        #{approveunit,jdbcType=VARCHAR},
+      </if>
+      <if test="approveno != null">
+        #{approveno,jdbcType=VARCHAR},
+      </if>
+      <if test="expiredate != null">
+        #{expiredate,jdbcType=VARCHAR},
+      </if>
+      <if test="measureunit != null">
+        #{measureunit,jdbcType=VARCHAR},
+      </if>
+      <if test="reportunitadmin != null">
+        #{reportunitadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="reportstatadmin != null">
+        #{reportstatadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="reportfilladmin != null">
+        #{reportfilladmin,jdbcType=VARCHAR},
+      </if>
+      <if test="reportadmintel != null">
+        #{reportadmintel,jdbcType=VARCHAR},
+      </if>
+      <if test="reportdate != null">
+        #{reportdate,jdbcType=VARCHAR},
+      </if>
+      <if test="reportuserid != null">
+        #{reportuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportusername != null">
+        #{reportusername,jdbcType=VARCHAR},
+      </if>
+      <if test="reportuseroffice != null">
+        #{reportuseroffice,jdbcType=VARCHAR},
+      </if>
+      <if test="html != null">
+        #{html,jdbcType=OTHER},
+      </if>
+      <if test="createdon != null">
+        #{createdon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedon != null">
+        #{modifiedon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskperiod != null">
+        #{taskperiod,jdbcType=VARCHAR},
+      </if>
+      <if test="auditstatus != null">
+        #{auditstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditon != null">
+        #{auditon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audituserid != null">
+        #{audituserid,jdbcType=VARCHAR},
+      </if>
+      <if test="auditusername != null">
+        #{auditusername,jdbcType=VARCHAR},
+      </if>
+      <if test="passedstatus != null">
+        #{passedstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditcomment != null">
+        #{auditcomment,jdbcType=OTHER},
+      </if>
+      <if test="reportcode != null">
+        #{reportcode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=OTHER},
+      </if>
+      <if test="reporton != null">
+        #{reporton,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvestatus != null">
+        #{approvestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fillunittype != null">
+        #{fillunittype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismandatoryreport != null">
+        #{ismandatoryreport,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="testrequire != null">
+        #{testrequire,jdbcType=DECIMAL},
+      </if>
+      <if test="testcheck != null">
+        #{testcheck,jdbcType=DECIMAL},
+      </if>
+      <if test="testrange != null">
+        #{testrange,jdbcType=DECIMAL},
+      </if>
+      <if test="reportremark != null">
+        #{reportremark,jdbcType=OTHER},
+      </if>
+      <if test="reportoffice != null">
+        #{reportoffice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.druid.domain.FrReportheader">
+    update FR_REPORTHEADER
+    <set>
+      <if test="uiid != null">
+        UIID = #{uiid,jdbcType=VARCHAR},
+      </if>
+      <if test="taskid != null">
+        TASKID = #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="reporttype != null">
+        REPORTTYPE = #{reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        CITYNAME = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentname != null">
+        DEPARTMENTNAME = #{departmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="regionname != null">
+        REGIONNAME = #{regionname,jdbcType=VARCHAR},
+      </if>
+      <if test="regioncode != null">
+        REGIONCODE = #{regioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionocean != null">
+        REGIONOCEAN = #{regionocean,jdbcType=VARCHAR},
+      </if>
+      <if test="reportunit != null">
+        REPORTUNIT = #{reportunit,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionname != null">
+        INSTITUTIONNAME = #{institutionname,jdbcType=VARCHAR},
+      </if>
+      <if test="institutioncode != null">
+        INSTITUTIONCODE = #{institutioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="domainname != null">
+        DOMAINNAME = #{domainname,jdbcType=VARCHAR},
+      </if>
+      <if test="domaincode != null">
+        DOMAINCODE = #{domaincode,jdbcType=VARCHAR},
+      </if>
+      <if test="reportyear != null">
+        REPORTYEAR = #{reportyear,jdbcType=VARCHAR},
+      </if>
+      <if test="reportquarter != null">
+        REPORTQUARTER = #{reportquarter,jdbcType=VARCHAR},
+      </if>
+      <if test="reportno != null">
+        REPORTNO = #{reportno,jdbcType=VARCHAR},
+      </if>
+      <if test="createunit != null">
+        CREATEUNIT = #{createunit,jdbcType=VARCHAR},
+      </if>
+      <if test="approveunit != null">
+        APPROVEUNIT = #{approveunit,jdbcType=VARCHAR},
+      </if>
+      <if test="approveno != null">
+        APPROVENO = #{approveno,jdbcType=VARCHAR},
+      </if>
+      <if test="expiredate != null">
+        EXPIREDATE = #{expiredate,jdbcType=VARCHAR},
+      </if>
+      <if test="measureunit != null">
+        MEASUREUNIT = #{measureunit,jdbcType=VARCHAR},
+      </if>
+      <if test="reportunitadmin != null">
+        REPORTUNITADMIN = #{reportunitadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="reportstatadmin != null">
+        REPORTSTATADMIN = #{reportstatadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="reportfilladmin != null">
+        REPORTFILLADMIN = #{reportfilladmin,jdbcType=VARCHAR},
+      </if>
+      <if test="reportadmintel != null">
+        REPORTADMINTEL = #{reportadmintel,jdbcType=VARCHAR},
+      </if>
+      <if test="reportdate != null">
+        REPORTDATE = #{reportdate,jdbcType=VARCHAR},
+      </if>
+      <if test="reportuserid != null">
+        REPORTUSERID = #{reportuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportusername != null">
+        REPORTUSERNAME = #{reportusername,jdbcType=VARCHAR},
+      </if>
+      <if test="reportuseroffice != null">
+        REPORTUSEROFFICE = #{reportuseroffice,jdbcType=VARCHAR},
+      </if>
+      <if test="html != null">
+        HTML = #{html,jdbcType=OTHER},
+      </if>
+      <if test="createdon != null">
+        CREATEDON = #{createdon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedon != null">
+        MODIFIEDON = #{modifiedon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskperiod != null">
+        TASKPERIOD = #{taskperiod,jdbcType=VARCHAR},
+      </if>
+      <if test="auditstatus != null">
+        AUDITSTATUS = #{auditstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditon != null">
+        AUDITON = #{auditon,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audituserid != null">
+        AUDITUSERID = #{audituserid,jdbcType=VARCHAR},
+      </if>
+      <if test="auditusername != null">
+        AUDITUSERNAME = #{auditusername,jdbcType=VARCHAR},
+      </if>
+      <if test="passedstatus != null">
+        PASSEDSTATUS = #{passedstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditcomment != null">
+        AUDITCOMMENT = #{auditcomment,jdbcType=OTHER},
+      </if>
+      <if test="reportcode != null">
+        REPORTCODE = #{reportcode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=OTHER},
+      </if>
+      <if test="reporton != null">
+        REPORTON = #{reporton,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvestatus != null">
+        APPROVESTATUS = #{approvestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fillunittype != null">
+        FILLUNITTYPE = #{fillunittype,jdbcType=VARCHAR},
+      </if>
+      <if test="ismandatoryreport != null">
+        ISMANDATORYREPORT = #{ismandatoryreport,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="testrequire != null">
+        TESTREQUIRE = #{testrequire,jdbcType=DECIMAL},
+      </if>
+      <if test="testcheck != null">
+        TESTCHECK = #{testcheck,jdbcType=DECIMAL},
+      </if>
+      <if test="testrange != null">
+        TESTRANGE = #{testrange,jdbcType=DECIMAL},
+      </if>
+      <if test="reportremark != null">
+        REPORTREMARK = #{reportremark,jdbcType=OTHER},
+      </if>
+      <if test="reportoffice != null">
+        REPORTOFFICE = #{reportoffice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.druid.domain.FrReportheader">
+    update FR_REPORTHEADER
+    set UIID = #{uiid,jdbcType=VARCHAR},
+      TASKID = #{taskid,jdbcType=VARCHAR},
+      REPORTTYPE = #{reporttype,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      CITYNAME = #{cityname,jdbcType=VARCHAR},
+      DEPARTMENTNAME = #{departmentname,jdbcType=VARCHAR},
+      REGIONNAME = #{regionname,jdbcType=VARCHAR},
+      REGIONCODE = #{regioncode,jdbcType=VARCHAR},
+      REGIONOCEAN = #{regionocean,jdbcType=VARCHAR},
+      REPORTUNIT = #{reportunit,jdbcType=VARCHAR},
+      INSTITUTIONNAME = #{institutionname,jdbcType=VARCHAR},
+      INSTITUTIONCODE = #{institutioncode,jdbcType=VARCHAR},
+      DOMAINNAME = #{domainname,jdbcType=VARCHAR},
+      DOMAINCODE = #{domaincode,jdbcType=VARCHAR},
+      REPORTYEAR = #{reportyear,jdbcType=VARCHAR},
+      REPORTQUARTER = #{reportquarter,jdbcType=VARCHAR},
+      REPORTNO = #{reportno,jdbcType=VARCHAR},
+      CREATEUNIT = #{createunit,jdbcType=VARCHAR},
+      APPROVEUNIT = #{approveunit,jdbcType=VARCHAR},
+      APPROVENO = #{approveno,jdbcType=VARCHAR},
+      EXPIREDATE = #{expiredate,jdbcType=VARCHAR},
+      MEASUREUNIT = #{measureunit,jdbcType=VARCHAR},
+      REPORTUNITADMIN = #{reportunitadmin,jdbcType=VARCHAR},
+      REPORTSTATADMIN = #{reportstatadmin,jdbcType=VARCHAR},
+      REPORTFILLADMIN = #{reportfilladmin,jdbcType=VARCHAR},
+      REPORTADMINTEL = #{reportadmintel,jdbcType=VARCHAR},
+      REPORTDATE = #{reportdate,jdbcType=VARCHAR},
+      REPORTUSERID = #{reportuserid,jdbcType=VARCHAR},
+      REPORTUSERNAME = #{reportusername,jdbcType=VARCHAR},
+      REPORTUSEROFFICE = #{reportuseroffice,jdbcType=VARCHAR},
+      HTML = #{html,jdbcType=OTHER},
+      CREATEDON = #{createdon,jdbcType=TIMESTAMP},
+      MODIFIEDON = #{modifiedon,jdbcType=TIMESTAMP},
+      TASKPERIOD = #{taskperiod,jdbcType=VARCHAR},
+      AUDITSTATUS = #{auditstatus,jdbcType=VARCHAR},
+      AUDITON = #{auditon,jdbcType=TIMESTAMP},
+      AUDITUSERID = #{audituserid,jdbcType=VARCHAR},
+      AUDITUSERNAME = #{auditusername,jdbcType=VARCHAR},
+      PASSEDSTATUS = #{passedstatus,jdbcType=VARCHAR},
+      AUDITCOMMENT = #{auditcomment,jdbcType=OTHER},
+      REPORTCODE = #{reportcode,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=OTHER},
+      REPORTON = #{reporton,jdbcType=TIMESTAMP},
+      APPROVESTATUS = #{approvestatus,jdbcType=VARCHAR},
+      FILLUNITTYPE = #{fillunittype,jdbcType=VARCHAR},
+      ISMANDATORYREPORT = #{ismandatoryreport,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=DECIMAL},
+      TESTREQUIRE = #{testrequire,jdbcType=DECIMAL},
+      TESTCHECK = #{testcheck,jdbcType=DECIMAL},
+      TESTRANGE = #{testrange,jdbcType=DECIMAL},
+      REPORTREMARK = #{reportremark,jdbcType=OTHER},
+      REPORTOFFICE = #{reportoffice,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="exportData" parameterType="hashmap" resultMap="BaseResultMap">
+    select id ,name ,reportunit,html,reportno, html,taskperiod from FR_REPORTHEADER where 1=1
+    <if test="beginTime != null and beginTime != ''">
+      and to_date(#{beginTime},'yyyymmdd') &lt;= createdon
+    </if>
+    <if test="endTime != null and endTime != ''">
+      and to_date(#{endTime},'yyyymmdd') &gt;= createdon
+    </if>
+  </select>
+</mapper>
